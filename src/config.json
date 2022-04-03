@@ -1,0 +1,4 @@
+{
+    "welocomeMessage": "${member}, witaj na serwerze **IDMiA**. Jesteś tu jako #${count} osoba!",
+    "welcomeChannel": "945013962519490580"
+}
