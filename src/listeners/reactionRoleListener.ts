@@ -16,8 +16,6 @@ export function run(client: Discord.Client, localStorag: any) {
             const title = message.embeds[0].title
             if (!title) return
 
-            console.log(title)
-
             const menuTitle = `${title}${guild.id}`
 
             const reactionMenu = localStorag.reactionMenu[menuTitle]
