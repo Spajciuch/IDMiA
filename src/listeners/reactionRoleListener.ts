@@ -16,8 +16,6 @@ export function run(client: Discord.Client, localStorag: any) {
             const title = message.embeds[0].title
             if (!title) return
 
-            console.log(title)
-
             const menuTitle = `${title}${guild.id}`
 
             const reactionMenu = localStorag.reactionMenu[menuTitle]
@@ -43,6 +41,12 @@ export function run(client: Discord.Client, localStorag: any) {
                 member.roles.add(role)
             } else {
                 if (member.roles.cache.find((r: Discord.Role) => r.id == role)) member.roles.remove(role)
+            }
+
+            if(role == "852625657619415050") {
+                member.roles.add(["960282091403227186", "960283135206117456", "960283100724744253"]).catch(err => {
+                    console.log("Permission Error")
+                })
             }
         })
     })
