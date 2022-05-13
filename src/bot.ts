@@ -113,3 +113,7 @@ client.on("messageCreate", message => {
 })
 
 client.login(process.env.TOKEN)
+
+process.on("uncaughtException", e => {
+    console.log(chalk.red(`[error] Wystąpił błąd`))
+}) 
