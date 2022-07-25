@@ -45,7 +45,7 @@ const firebaseConfig = {
     messagingSenderId: "808304027546",
     appId: "1:808304027546:web:e12265dd5d85be06067c23"
   };
-  
+
   const app = firebase.initializeApp(firebaseConfig);
 
 fs.readdir("./dist/commands", async (err, files) => {
@@ -121,5 +121,5 @@ client.on("messageCreate", message => {
 client.login(process.env.TOKEN)
 
 process.on("uncaughtException", e => {
-    console.log(chalk.red(`[error] Wystąpił błąd`))
-}) 
+    console.log(chalk.red(`[error] ${e}`))
+})

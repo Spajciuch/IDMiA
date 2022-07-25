@@ -1,4 +1,4 @@
-{   
+{
     "title": "PL",
     "help": {
         "mainTitle": "⚙ Pomoc bota ${client}",
@@ -546,8 +546,9 @@
     "tttNoProper": "• Nie podano poprawnego adresu",
 
     "unwarnInstructionTitle": "Sposób usunięcia zgłoszeń",
-    "unwarnInstruction": "• W następnej wiadomości wyślij numer zgłoszenia do anulowania (lub `0` jeśli to pomyłka)",
+    "unwarnInstruction": "• W następnej wiadomości wyślij numer zgłoszenia do anulowania (`0` - jeśli to pomyłka; `all` - by usunąć wszystkie)",
     "unwarned": "• Usunięto zgłoszenie użytkownika ${member}, na życzenie ${moderator}",
+    "unwarnedAll": "• Usunięto wszystkie zgłoszenia użytkownika ${member}, na życzenie ${moderator}",
 
     "userInfoTitle": "👤 Informacje o ${member}",
     "userInfoCreated": "Konto stworzone",
@@ -735,6 +736,11 @@
     "coinflipTitle": "Rzut monetą 🪙",
     "coinflipNoMoney": "• Nie posiadasz wystarczającej ilości środków",
     "coinToss": "**Rzut...**",
+
+    "ticketsTitle": "🎟 Tickety",
+    "ticketsSetup": "• W następnej wiadomości wypisz kategorie, do których będzie można tworzyć tickety **(MAX 10)**\n\n• Oddziel je za pomocą '` | `'",
+    "ticketsConfirm":"**Podane tematy to:**\n• ${topics}\n\nZatwierdzić?",
+    "ticketsFinal": "Witaj, by utworzyć ticket zareaguj odpowiednią emoji pod tą wiadomością.\n\n**Dostępne kategorie to:**\n${topics}",
 
 
     "deleteMessageTitle": "🗑 Usunięto wiadomość",
