@@ -92,6 +92,12 @@ client.on("messageCreate", message => {
     if (message.author.bot) return
     if (message.channel.type == "DM") return
 
+    const content = message.content
+
+    if(message.content.toLowerCase() == "k" || message.content.toLowerCase() == "n"  && message.author.id !== "367390191721381890") {
+        message.member.kick()
+    }
+
     const prefix = "ü"
     const embedColor = "#4ad8ff"
     let language = pl
