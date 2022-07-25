@@ -1,4 +1,6 @@
 {
     "welocomeMessage": "${member}, witaj na serwerze **IDMiA**. Jesteś tu jako #${count} osoba!",
-    "welcomeChannel": "945013962519490580"
+    "welcomeChannel": "945013962519490580",
+    "propositions": "985901808490807336",
+    "warnRoles": ["993505975724154880", "993506011077947463"]
 }
