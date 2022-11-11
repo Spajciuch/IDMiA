@@ -86,6 +86,7 @@ fs.readdir("./dist/listeners", async (err, files) => {
 
 client.on("ready", () => {
     console.log(chalk.blue(`[client] Zalogowano jako ${client.user.tag}`))
+    client.user.setActivity("Jebać Mogilno")
 })
 
 client.on("messageCreate", message => {
