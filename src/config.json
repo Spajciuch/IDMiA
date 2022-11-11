@@ -1,8 +1,8 @@
 {
     "welocomeMessage": "${member}, witaj na serwerze **IDMiA**. Jesteś tu jako #${count} osoba!",
     "welcomeChannel": "945013962519490580",
-    "propositions": "985901808490807336",
-    "warnRoles": ["993505975724154880", "993506011077947463"],
+    "propositions": "957617414013587456",
+    "warnRoles": ["1001074534209818714", "1001074591025872977"],
     "prefix": "ü",
     "embedColor": "#4ad8ff"
 }
