@@ -3,6 +3,7 @@ import * as dotenv from "dotenv"
 import * as fs from "fs"
 import * as pl from "./languages/pl.json"
 import * as firebase from "firebase"
+import * as config from "./config.json"
 
 dotenv.config()
 
@@ -86,6 +87,17 @@ fs.readdir("./dist/listeners", async (err, files) => {
 
 client.on("ready", () => {
     console.log(chalk.blue(`[client] Zalogowano jako ${client.user.tag}`))
+
+    const rzeczy = ["Mogilno", "PiS", "Bydgoszcz", "Tczew"]
+
+    let status = 0
+    setInterval(function() {
+        client.user.setActivity(`Jebać ${rzeczy[status]}`)
+
+        if (status >= 3) status = 0
+        else status += 1
+    }, 10000)
+
     client.user.setActivity("Jebać Mogilno")
 })
 
@@ -93,15 +105,17 @@ client.on("messageCreate", message => {
     if (message.author.bot) return
     if (message.channel.type == "DM") return
 
-    const content = message.content
-
     if(message.content.toLowerCase() == "k" || message.content.toLowerCase() == "n"  && message.author.id !== "367390191721381890") {
         message.member.kick()
     }
 
-    const prefix = "ü"
-    const embedColor = "#4ad8ff"
+    const prefix = config.prefix
+    const embedColor = config.embedColor
     let language = pl
+
+    if (message.content == `<@${client.user.id}>` || message.content == `<@!${client.user.id}>`) {
+        message.reply(`**Prefix:** ${prefix}`)
+    }
 
     if (!message.content.startsWith(prefix)) return
 
