@@ -40,7 +40,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
 
 module.exports.help = {
-    name: "welcomeTest"
+    name: "welcomeTest",
+    category: "hidden"
 }
 
 module.exports.aliases = ["wt"]

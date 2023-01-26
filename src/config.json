@@ -2,5 +2,12 @@
     "welocomeMessage": "${member}, witaj na serwerze **IDMiA**. Jesteś tu jako #${count} osoba!",
     "welcomeChannel": "945013962519490580",
     "propositions": "957617414013587456",
+<<<<<<< HEAD
     "warnRoles": ["1001074534209818714", "1001074591025872977"]
 }
+=======
+    "warnRoles": ["1001074534209818714", "1001074591025872977"],
+    "prefix": "ü",
+    "embedColor": "#4ad8ff"
+}
+>>>>>>> e4c9067ef6db1ad8a7f33d7271470460d369adff

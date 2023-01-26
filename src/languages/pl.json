@@ -2,7 +2,8 @@
     "title": "PL",
     "help": {
         "mainTitle": "⚙ Pomoc bota ${client}",
-        "mainScreen": "• Ilość wszystkich komend: ${count}\n• W razie jakichkolwiek problemów, dołacz na [serwer pomocy](https://discord.gg/yfzXY5g)\n• Jeśli chcesz uzyskać szczegółowe informacje o komendzie użyj: `${prefix}help <nazwa komedy>`",
+        "allCommands": "✨ Lista wszystkich komend",
+        "mainScreen": "• Jeśli chcesz uzyskać szczegółowe informacje o komendzie użyj: `${prefix}help <nazwa komedy>`",
         "gameTitle": "🎮 Gry / Zabawa",
         "economyTitle": "💸 Ekonomia",
         "funTitle": "🎭 Komendy do zabawy",
@@ -79,6 +80,8 @@
         "recrutation": "• Za pomocą tej komendy możesz tworzyć oraz brać udział w rekrutacji.\n\n• $recrutation create - Po użyciu uruchomi się kreator tworzenia rekrutacji, który przeprowadzi cię przez proces tworzenia pytań do rekrutacji\n\n• $recrutation [bez argumentu] - Po użyciu na serwerze z włączoną rekrutacją, bot wyśle pytania rekrutacyjne na PW (odpowiedzi należy podać również na Pw)",
         "quiz": "• Dzięki tej komendzie możesz tworzyć oraz rozwiązywać quizy stworzone przez innych użytkowników\n\n• $quiz create - Po użyciu uruchomi się kreator który przeprowadzi cię przez proces tworzenia quizu, wszelkie instrukcje zostaną wysłane na PW\n\n• $quiz [bez argumentu] - wyświetli listę quizów\n\n• $quiz [numer z listy] - pozowli wziąć ci udział w quizie",
         "flamingText": "• Za pomocą tej komendy wygenerujesz płonący tekst. Napisz po prostu: `$flamingText <twój tekst>`"
+        
+
     },
 
     "8ballAnswers": [
@@ -741,6 +744,8 @@
     "ticketsSetup": "• W następnej wiadomości wypisz kategorie, do których będzie można tworzyć tickety **(MAX 10)**\n\n• Oddziel je za pomocą '` | `'",
     "ticketsConfirm":"**Podane tematy to:**\n• ${topics}\n\nZatwierdzić?",
     "ticketsFinal": "Witaj, by utworzyć ticket zareaguj odpowiednią emoji pod tą wiadomością.\n\n**Dostępne kategorie to:**\n${topics}",
+
+    "playInvalidURL": "• Podałeś niepoprawny URL",
 
 
     "deleteMessageTitle": "🗑 Usunięto wiadomość",
