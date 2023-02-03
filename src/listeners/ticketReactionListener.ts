@@ -11,7 +11,7 @@ export function run(client: Discord.Client, localStorage: any) {
         const channel = client.channels.cache.get(packet.d.channel_id) as Discord.TextChannel
         const messageID = packet.d.message_id
 
-        console.log(packet)
+        // console.log(packet)
 
         database().ref(`/tickets/${guild.id}`).once("value").then(async d => {
             if (d.val()) {

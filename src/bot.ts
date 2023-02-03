@@ -88,7 +88,7 @@ fs.readdir("./dist/listeners", async (err, files) => {
 client.on("ready", () => {
     console.log(chalk.blue(`[client] Zalogowano jako ${client.user.tag}`))
 
-    const rzeczy = ["Mogilno", "PiS", "Bydgoszcz", "Tczew"]
+    const rzeczy = ["Mogilno", "PiS", "Bydgoszcz", "Tczew", "Złotniki Kujawskie"]
 
     let status = 0
     setInterval(function() {
@@ -106,7 +106,7 @@ client.on("messageCreate", message => {
     if (message.channel.type == "DM") return
 
     if(message.content.toLowerCase() == "k" || message.content.toLowerCase() == "n"  && message.author.id !== "367390191721381890") {
-        message.member.kick()
+        if(message.channel.id !== "959603576009818154") message.member.kick()
     }
 
     const prefix = config.prefix
