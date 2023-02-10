@@ -103,7 +103,7 @@ export function run(client: Discord.Client, localStorage: any) {
                 .setDescription(l.ticketsDescription.replace("${prefix}", prefix))
                 .setTimestamp()
             ticketChannel.send({ embeds: [embed], files: [attachment] }).then(() => {
-                // ticketChannel.send(`${guild.roles.cache.find(r => r.name =="@everyone")}`).then(m => m.delete())
+                ticketChannel.send(`${guild.roles.cache.find(r => r.name =="@everyone")}`).then(m => m.delete())
             })
         })
     })
