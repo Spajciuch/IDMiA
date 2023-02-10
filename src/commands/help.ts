@@ -11,20 +11,20 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             description = commandNames.join(", ")
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor(embedColor)
             .setTitle(l.help.mainTitle.replace("${client}", client.user.tag))
             .setDescription(l.help.mainScreen.replace("${prefix}", config.prefix))
-            .addField(l.help.allCommands, description)
-            .setThumbnail(client.user.avatarURL({ size: 1024, format: "png" }))
+            .addFields({name: l.help.allCommands, value: description})
+            .setThumbnail(client.user.avatarURL({ size: 1024, extension: "png" }))
         message.channel.send({ embeds: [embed] })
     } else {
         const commandName = args[0]
        
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
         .setColor(embedColor)
         .setTitle(l.help.mainTitle.replace("${client}", client.user.tag))
-        .setThumbnail(client.user.avatarURL({ size: 1024, format: "png" }))
+        .setThumbnail(client.user.avatarURL({ size: 1024, extension: "png" }))
         .setDescription(l.help[commandName] || "• Na razie do tej komendy nie ma opisu")
 
         message.channel.send({embeds: [embed]})

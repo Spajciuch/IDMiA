@@ -1,7 +1,7 @@
 import * as Discord from "discord.js"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: string, l: any, localStorage: any) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({ embeds: [l.noPermission ]})
+    if (!message.member.permissions.has("ManageMessages")) return message.channel.send({ embeds: [l.noPermission ]})
     if (!args[0]) return message.channel.send({ embeds: l.noArgs })
 
     const channel = message.channel as Discord.TextChannel
@@ -20,8 +20,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
         for (var i = 0; i <= output[0] - 1; i++) {
             channel.bulkDelete(100).catch(err => {
-                const embed = new Discord.MessageEmbed()
-                    .setColor("RED")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Red")
                     .setTitle(l.errorTitle)
                     .setDescription(l.clearTooOld)
                     .setTimestamp()
@@ -31,16 +31,16 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
         const rest = Number(`${output[1]}${output[2]}`)
         channel.bulkDelete(rest).catch(err => {
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.errorTitle)
                 .setDescription(l.clearTooOld)
                 .setTimestamp()
             channel.send({embeds: [embed]})
         })
             .then(() => {
-                const embed = new Discord.MessageEmbed()
-                    .setColor("GREEN")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Green")
                     .setTitle(l.clearTitle)
                     .setDescription(l.clearDone.replace("${count}", number))
                     .setTimestamp()
@@ -52,16 +52,16 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         if (isNaN(number)) return channel.send({ embeds: l.isNaN })
 
         channel.bulkDelete(number).catch(err => {
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.errorTitle)
                 .setDescription(l.clearTooOld)
                 .setTimestamp()
             channel.send({embeds: [embed]})
         })
             .then(() => {
-                const embed = new Discord.MessageEmbed()
-                    .setColor("GREEN")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Green")
                     .setTitle(l.clearTitle)
                     .setDescription(l.clearDone.replace("${count}", number))
                     .setTimestamp()

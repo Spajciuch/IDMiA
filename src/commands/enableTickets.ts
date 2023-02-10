@@ -2,9 +2,9 @@ import * as Discord from "discord.js"
 import { database } from "firebase"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
-  if (!message.member.permissions.has("MANAGE_GUILD")) return message.channel.send({ embeds: [l.noPermission] })
+  if (!message.member.permissions.has("ManageGuild")) return message.channel.send({ embeds: [l.noPermission] })
 
-  const embed = new Discord.MessageEmbed()
+  const embed = new Discord.EmbedBuilder()
     .setColor(embedColor)
     .setTitle(l.ticketsTitle)
     .setDescription(l.ticketsSetup)
@@ -24,7 +24,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
   })
 
   parametersCollector.on("end", () => {
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
       .setColor(embedColor)
       .setTitle(l.ticketsTitle)
       .setDescription(l.ticketsConfirm.replace("${topics}", topics.join("\n• ")))
@@ -45,9 +45,9 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
           description += `${emojis[i]} ${topics[i]}\n`
         }
 
-        const attachment = new Discord.MessageAttachment("./images/IDMIA - TICKET.png", "ticket.png")
+        const attachment = new Discord.AttachmentBuilder("./images/IDMIA - TICKET.png", {name: "ticket.png"})
 
-        const finalEmbed = new Discord.MessageEmbed()
+        const finalEmbed = new Discord.EmbedBuilder()
           .setColor(embedColor)
           .setTitle(l.ticketsTitle)
           .setDescription(l.ticketsFinal.replace("${topics}", description))

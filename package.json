@@ -12,15 +12,21 @@
   "dependencies": {
     "@discordjs/voice": "^0.13.0",
     "@types/gifencoder": "^2.0.1",
+    "@types/moment": "^2.13.0",
     "chalk": "^4.0.0",
-    "discord.js": "^13.6.0",
+    "discord-api-types": "^0.37.31",
+    "discord.js": "^14.7.1",
     "dotenv": "^16.0.0",
     "firebase": "^7.15.5",
     "flaming-text-generator": "^1.0.2",
     "gifencoder": "^2.0.1",
     "make-a-gif": "^2.0.0",
+    "moment": "^2.29.4",
     "node-fetch": "^2.6.7",
     "png-file-stream": "^1.2.1",
     "ytdl-core": "^4.11.2"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.2"
   }
 }

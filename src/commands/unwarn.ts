@@ -1,21 +1,21 @@
 import * as Discord from "discord.js"
 import { database } from "firebase"
-import {warnRoles} from "../config.json"
+import { warnRoles } from "../config.json"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
-    if (!message.member.permissions.has("MANAGE_GUILD")) return message.channel.send({ embeds: [l.noPermission] })
+    if (!message.member.permissions.has("ManageGuild")) return message.channel.send({ embeds: [l.noPermission] })
 
     const memberID = args[0].replace("<", "").replace("@", "").replace("!", "").replace(">", "")
     if (!memberID || memberID.length !== 18) return message.channel.send({ embeds: [l.noMember] })
 
     const member = message.guild.members.cache.get(memberID)
 
-    database().ref(`/warns/${message.guild.id}/${memberID}`).once("value").then(d => {
+    database().ref(`/warns/${message.guild.id}/${memberID}`).once("value").then((d: any) => {
         const warnData = d.val()
 
         if (!warnData) {
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.errorTitle)
                 .setDescription(l.checkEmpty)
                 .setTimestamp()
@@ -37,11 +37,11 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             description += `• ${i + 1}. ${reasons[i]} - <@${moderators[i]}>\n`
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor(embedColor)
             .setTitle(l.checkTitle + message.author.tag)
             .setDescription(description)
-            .addField(l.unwarnInstructionTitle, l.unwarnInstruction)
+            .addFields({ name: l.unwarnInstructionTitle, value: l.unwarnInstruction })
         message.channel.send({ embeds: [embed] }).then(() => {
             const filter = (m: Discord.Message) => m.author.id == message.author.id
             const collector = new Discord.MessageCollector(message.channel as Discord.TextChannel, { filter: filter })
@@ -50,8 +50,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
             collector.on("collect", msg => {
                 if (Number(msg.content) == 0) {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("GREEN")
+                    const embed = new Discord.EmbedBuilder()
+                        .setColor("Green")
                         .setTitle(l.checkTitle)
                         .setDescription(l.canceled)
                         .setTimestamp()
@@ -60,11 +60,11 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                     return collector.stop()
                 }
 
-                if(msg.content.toLowerCase() == "all") {
+                if (msg.content.toLowerCase() == "all") {
                     database().ref(`/warns/${message.guild.id}/${memberID}`).set({
                     }).then(() => {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor("GREEN")
+                        const embed = new Discord.EmbedBuilder()
+                            .setColor("Green")
                             .setTitle(l.checkTitle)
                             .setDescription(l.unwarnedAll.replace("${member}", member).replace("${moderator}", message.member))
                             .setTimestamp()
@@ -101,8 +101,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                         moderators: moderators,
                         reasons: reasons
                     }).then(() => {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor("GREEN")
+                        const embed = new Discord.EmbedBuilder()
+                            .setColor("Green")
                             .setTitle(l.checkTitle)
                             .setDescription(l.unwarned.replace("${member}", member).replace("${moderator}", message.member))
                             .setTimestamp()

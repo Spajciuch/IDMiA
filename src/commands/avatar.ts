@@ -12,7 +12,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
     const avatarURL = user.displayAvatarURL({ size: 2048 })
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
         .setColor(embedColor)
         .setTitle(l.avatarTitle + user.tag)
         .setImage(avatarURL)

@@ -23,7 +23,7 @@ export function run(client: Discord.Client, localStorage: any) {
         const canvas = createCanvas(1920, 1080)
         const ctx = canvas.getContext('2d')
 
-        const response = await fetch(member.user.avatarURL({ format: "png", size: 2048 }))
+        const response = await fetch(member.user.avatarURL({ extension: "png", size: 2048 }))
         const responseBuffer = await response.buffer()
         const item = await loadImage(responseBuffer)
 
@@ -42,7 +42,7 @@ export function run(client: Discord.Client, localStorage: any) {
 
         ctx.fillText(member.user.tag, 975, 835)
 
-        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "banner.png")
+        const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), {name: "banner.png"})
         channel.send({ files: [attachment] })
     })
 }

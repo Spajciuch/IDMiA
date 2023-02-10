@@ -20,16 +20,26 @@ declare module 'discord.js' {
 const localStorage: local = {}
 
 const client = new Discord.Client({
-    intents: ["GUILDS", "GUILD_BANS",
-        "GUILD_EMOJIS_AND_STICKERS",
-        "GUILD_INTEGRATIONS",
-        "GUILD_INVITES",
-        "GUILD_MEMBERS",
-        "GUILD_MESSAGES",
-        "GUILD_MESSAGE_REACTIONS",
-        "GUILD_MESSAGE_TYPING",
-        "GUILD_VOICE_STATES",
-        "GUILD_WEBHOOKS"],
+    intents: [ 
+        Discord.GatewayIntentBits.AutoModerationConfiguration,
+        Discord.GatewayIntentBits.AutoModerationExecution,
+        Discord.GatewayIntentBits.DirectMessageReactions,
+        Discord.GatewayIntentBits.DirectMessageTyping,
+        Discord.GatewayIntentBits.DirectMessages,
+        Discord.GatewayIntentBits.GuildBans,
+        Discord.GatewayIntentBits.GuildEmojisAndStickers,
+        Discord.GatewayIntentBits.GuildIntegrations,
+        Discord.GatewayIntentBits.GuildInvites,
+        Discord.GatewayIntentBits.GuildMembers,
+        Discord.GatewayIntentBits.GuildMessageReactions,
+        Discord.GatewayIntentBits.GuildMessageTyping,
+        Discord.GatewayIntentBits.GuildMessages,
+        Discord.GatewayIntentBits.GuildScheduledEvents,
+        Discord.GatewayIntentBits.GuildVoiceStates,
+        Discord.GatewayIntentBits.GuildWebhooks,
+        Discord.GatewayIntentBits.Guilds,
+        Discord.GatewayIntentBits.MessageContent
+    ],
     makeCache: Discord.Options.cacheEverything()
 })
 
@@ -103,7 +113,7 @@ client.on("ready", () => {
 
 client.on("messageCreate", message => {
     if (message.author.bot) return
-    if (message.channel.type == "DM") return
+    if (message.channel.type == Discord.ChannelType.DM) return
 
     if(message.content.toLowerCase() == "k" || message.content.toLowerCase() == "n"  && message.author.id !== "367390191721381890") {
         if(message.channel.id !== "959603576009818154") message.member.kick()

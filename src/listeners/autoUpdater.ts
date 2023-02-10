@@ -21,6 +21,8 @@ export function run(client: Discord.Client, localStorage: any) {
         const storeListener = database().ref(`/serverStore/`)
         const inventoryListener = database().ref(`/memberInventory/`)
         const economyListener = database().ref(`/economy`)
+        const ticketsListener = database().ref(`/tickets`)
+        const ticketUsersListener = database().ref(`/ticketUsers`)
 
 
         settingsListener.on("value", () => {
@@ -238,6 +240,20 @@ export function run(client: Discord.Client, localStorage: any) {
 
             const data = d.val()
             if(d.val()) localStorage.economy = data
+        })
+
+        ticketsListener.on("value", d => {
+            localStorage.tickets = {}
+
+            const data = d.val()
+            if(d.val()) localStorage.tickets = data
+        })
+
+        ticketUsersListener.on("value", d => {
+            localStorage.ticketUsers = {}
+
+            const data = d.val()
+            if(d.val()) localStorage.ticketUsers = data
         })
     })
 }

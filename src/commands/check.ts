@@ -13,7 +13,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
     database().ref(`/warns/${message.guild.id}/${member.id}`).once("value").then(data => {
         if (!data.val()) {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
                 .setTitle(l.checkTitle)
                 .setDescription(l.checkEmpty)
@@ -38,12 +38,12 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             }
 
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setThumbnail(member.user.displayAvatarURL({format: "png", size: 2048}))
+                .setThumbnail(member.user.displayAvatarURL({ extension: "png", size: 2048 }))
                 .setTitle(l.checkTitle + ` użytkownika ${member.user.tag}`)
                 .setDescription(description)
-                .setFooter(`Do bana: ${reasons.length} / ${3}`)
+                .setFooter({ text: `Do bana: ${reasons.length} / ${3}` })
             message.channel.send({ embeds: [embed] })
         }
     })

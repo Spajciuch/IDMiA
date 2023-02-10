@@ -744,9 +744,15 @@
     "ticketsSetup": "• W następnej wiadomości wypisz kategorie, do których będzie można tworzyć tickety **(MAX 10)**\n\n• Oddziel je za pomocą '` | `'",
     "ticketsConfirm":"**Podane tematy to:**\n• ${topics}\n\nZatwierdzić?",
     "ticketsFinal": "Witaj, by utworzyć ticket zareaguj odpowiednią emoji pod tą wiadomością.\n\n**Dostępne kategorie to:**\n${topics}",
-
+    "ticketsMadeBy": "utworzone przez",
+    "ticketsDescription": "• Ten kanał został utworzony na czas rozwiązania kwestii widniejącej w tytule.\nMają do niego dostęp tylko administratorzy oraz autor tego ticketu.\n\n• W celu zamknięcia ticketu należy użyć komendy: `${prefix}closeTicket`.\nPo jej użyciu kanał zostanie usunięty",
+    "ticketsTooMany": "• ⚠️ Masz aktywnych zbyt wiele ticketów. Zamknij istniejące by stworzyć kolejne",
+    "uSureTicket": "⚠️ Jesteś pewien? Spowoduje to usunięcie kanału",
+    "ticketSaveTitle": "🎟️ Zapis Ticketu na temat ${topic}",
+    "ticketNoContent": "<BRAK TEKSTU>",
+    "ticketSaveDescription": "• Zapis dostępny jest [tutaj](${link})",
     "playInvalidURL": "• Podałeś niepoprawny URL",
-
+    "archivizingTicketDescription": "<a:loading:932984302835212318> Trwa archiwizowanie wiadomości...",
 
     "deleteMessageTitle": "🗑 Usunięto wiadomość",
     "deleteMessageContent": "Treść wiadomości",

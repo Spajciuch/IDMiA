@@ -11,9 +11,9 @@ export function run(client: Discord.Client, localStorage: any) {
 
         const content = message.content
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor("#00ffae")
-            .setAuthor(l.propositionTitle.replace("${member}", message.author.tag), message.author.displayAvatarURL({ format: "png", size: 1024 }))
+            .setAuthor({ name: l.propositionTitle.replace("${member}", message.author.tag), iconURL: message.author.displayAvatarURL({ extension: "png", size: 1024 }) })
             .setDescription(`• ${content}`)
             .setTimestamp()
         message.channel.send({ embeds: [embed] }).then(m => {

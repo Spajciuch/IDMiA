@@ -3,7 +3,7 @@ import { database } from "firebase"
 import { warnRoles } from "../config.json"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
-    if (!message.member.permissions.has(Discord.Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send({ embeds: [l.noPermission] })
+    if (!message.member.permissions.has("BanMembers")) return message.channel.send({ embeds: [l.noPermission] })
 
     const member: Discord.GuildMember = message.mentions.members.first()
     if (!member) return message.channel.send({ embeds: [l.noMention] })
@@ -29,7 +29,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             reasons,
             moderators
         }).then(() => {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor("#ffd500")
                 .setTitle(l.warnTitle)
                 .setDescription(l.warnDescription.replace("${member}", member.user.tag).replace("${reason}", reason).replace("${moderator}", message.member))
@@ -39,12 +39,12 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             if (reasons.length > 2) {
                 member.ban()
 
-                const banEmbed = new Discord.MessageEmbed()
-                    .setColor("RED")
+                const banEmbed = new Discord.EmbedBuilder()
+                    .setColor("Red")
                     .setTitle(l.banTitle)
                     .setDescription(l.banned.replace("${member}", member).replace("${admin}", "zbyt dużą ilość zgłoszeń"))
                     .setTimestamp()
-                    .setThumbnail(member.user.displayAvatarURL({ format: "png", size: 2048 }))
+                    .setThumbnail(member.user.displayAvatarURL({ extension: "png", size: 2048 }))
                 return message.channel.send({ embeds: [banEmbed] })
             }
 

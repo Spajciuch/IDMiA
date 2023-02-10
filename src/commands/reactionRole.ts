@@ -2,7 +2,7 @@ import * as Discord from "discord.js"
 import { database } from "firebase"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
-    if (!message.member.permissions.has("MANAGE_GUILD")) return message.channel.send({ embeds: [l.noPermission] })
+    if (!message.member.permissions.has("ManageGuild")) return message.channel.send({ embeds: [l.noPermission] })
 
     function onlyRoles(array: Array<string>) {
         let state = true
@@ -32,7 +32,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         }
     }
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
         .setColor(embedColor)
         .setTitle(l.reactionRoleTitle)
         .setDescription(l.reactionRoleInstruction)
@@ -48,8 +48,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         if (msg.content.toLowerCase() == "stop") {
             roles = undefined
 
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.reactionRoleTitle)
                 .setDescription(l.stopped)
                 .setTimestamp()
@@ -61,8 +61,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         roles = msg.content.split(" ")
 
         if (hasDuplicates(roles)) {
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.errorTitle)
                 .setDescription(l.reactionRoleDuplicates)
                 .setTimestamp()
@@ -71,8 +71,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         }
 
         if (!onlyRoles(roles)) {
-            const embed = new Discord.MessageEmbed()
-                .setColor("RED")
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
                 .setTitle(l.errorTitle)
                 .setDescription(l.reactionRoleNoRoles)
                 .setTimestamp()
@@ -86,7 +86,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
     collector.on("end", () => {
         if (!roles || roles == undefined) return
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor(embedColor)
             .setTitle(l.reactionRoleTitle)
             .setDescription(l.reactionRoleEmojiInstruction)
@@ -101,8 +101,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             if (msg.content.toLowerCase() == "stop") {
                 emojis = undefined
 
-                const embed = new Discord.MessageEmbed()
-                    .setColor("RED")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Red")
                     .setTitle(l.reactionRoleTitle)
                     .setDescription(l.stopped)
                     .setTimestamp()
@@ -114,8 +114,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             emojis = msg.content.split(" ")
 
             if (hasDuplicates(emojis)) {
-                const embed = new Discord.MessageEmbed()
-                    .setColor("RED")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Red")
                     .setTitle(l.errorTitle)
                     .setDescription(l.reactionRoleEmojiDuplicates)
                     .setTimestamp()
@@ -128,8 +128,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                     let emojiArray = emojis[i].split(":")
 
                     if (!emojis[i].includes("<:") && !emojis[i].includes(">") && emojiArray[emojiArray.length - 1].length !== 19 && emojiArray.length !== 3) {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor("RED")
+                        const embed = new Discord.EmbedBuilder()
+                            .setColor("Red")
                             .setTitle(l.errorTitle)
                             .setDescription(l.reactionRoleTooLow)
                             .setTimestamp()
@@ -140,8 +140,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             }
 
             if (emojis.length !== roles.length) {
-                const embed = new Discord.MessageEmbed()
-                    .setColor("RED")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Red")
                     .setTitle(l.errorTitle)
                     .setDescription(l.reactionRoleTooLow)
                     .setTimestamp()
@@ -155,7 +155,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
         emojiCollector.on("end", () => {
             if (!emojis || emojis == undefined) return
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
                 .setTitle(l.reactionRoleTitle)
                 .setDescription(l.reactionRoleSetTitle)
@@ -170,8 +170,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                 if (msg.content.toLowerCase() == "stop") {
                     title = undefined
 
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
+                    const embed = new Discord.EmbedBuilder()
+                        .setColor("Red")
                         .setTitle(l.reactionRoleTitle)
                         .setDescription(l.stopped)
                         .setTimestamp()
@@ -192,7 +192,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                     description += `• ${emojis[i]} - ${roles[i]}\n`
                 }
 
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setColor(embedColor)
                     .setTitle(title)
                     .setDescription(description)

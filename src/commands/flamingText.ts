@@ -17,7 +17,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                 const generatedLink = data.src
 
                 if (data.error) {
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new Discord.EmbedBuilder()
                         .setColor(embedColor)
                         .setTitle(l.errorTitle)
                         .setDescription(l.ftError)
@@ -25,7 +25,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                     message.channel.send({ embeds: [embed] })
                 }
 
-                const attachment = new Discord.MessageAttachment(generatedLink, `${message.author.username} - flamingText.gif`)
+                const attachment = new Discord.AttachmentBuilder(generatedLink, {name: `${message.author.username} - flamingText.gif`})
                 message.channel.send({ files: [attachment] })
             })
         }
@@ -57,7 +57,7 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             return
         }
 
-        const attachment = new Discord.MessageAttachment(generatedLink, `${message.author.username} - flamingText.gif`)
+        const attachment = new Discord.AttachmentBuilder(generatedLink, {name: `${message.author.username} - flamingText.gif`})
         message.channel.send({ files: [attachment] })
     })
 }

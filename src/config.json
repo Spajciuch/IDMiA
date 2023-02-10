@@ -4,5 +4,8 @@
     "propositions": "957617414013587456",
     "warnRoles": ["1001074534209818714", "1001074591025872977"],
     "prefix": "ü",
-    "embedColor": "#4ad8ff"
+    "embedColor": "#4ad8ff",
+    "ticketsCategory": "Tickety",
+    "maxTickets": 3,
+    "archiveChannel": "1072988958386049164"
 }
