@@ -1,5 +1,4 @@
 import * as Discord from "discord.js"
-import firebase, { database } from "firebase"
 import { ticketsCategory, prefix, maxTickets } from "../config.json"
 import * as l from "../languages/pl.json"
 

@@ -7,6 +7,7 @@ import { ticketsCategory, archiveChannel } from "../config.json"
 
 module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
     const channel = (message.channel as Discord.TextChannel)
+    if (client[message.channel.id] == true) return
 
     if (channel.parent.name !== ticketsCategory) {
         message.react("❌")
@@ -22,10 +23,12 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
             const acceptFilter = (reaction: Discord.MessageReaction, user: Discord.User) => reaction.emoji.name == "✅" && user.bot == false
             const accept = msg.createReactionCollector({ filter: acceptFilter })
 
-            const declineFilter = (reaction: Discord.MessageReaction, user: Discord.User) => reaction.emoji.name == "❌" && user.bot == false
+            const declineFilter = (reaction: Discord.MessageReaction, user: Discord.User) => reaction.emoji.name == "❌" && user.bot == false && user.id == message.author.id
             const decline = msg.createReactionCollector({ filter: declineFilter })
 
             accept.on("collect", async () => {
+                client[message.channel.id] = true;
+
                 (message.channel as Discord.TextChannel).edit({
                     permissionOverwrites: [
                         {
@@ -50,8 +53,10 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
                 let ticketLog = `TICKET - ${(message.channel as Discord.TextChannel).name} [${moment.utc(new Date()).format("DD.MM.YYYY")}]\n===============================================\n`
                 const logFileName = Date.now().toString(36) + Math.random().toString(36).substr(2) + ".txt"
+                const secretCode = logFileName.split(".")[0]
 
                 let firstMessageTitle: string
+                let attachmentsToUpload: Array<string> = []
 
                 await message.channel.messages.fetch().then(async (messages: Discord.Collection<string, Discord.Message>) => {
                     const messagesArray = messages.map((msg: Discord.Message) => msg)
@@ -63,29 +68,34 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                         const attachmentArray = msg.attachments.map((attachment: Discord.Attachment) => attachment.attachment)
 
                         for (var x = 0; x <= attachmentArray.length - 1; x++) {
-                            const attachmentURL = attachmentArray[x]
-
-                            const bodyToSend = {
-                                fileURL: attachmentURL,
-                                fileName: logFileName.split(".")[0] + "_" + attachmentURL.toString().split("/")[attachmentURL.toString().split("/").length - 1]
-                            }
-
-                            await fetch(`https://fileserver-spyte.glitch.me/ticket-attachments`, {
-                                method: 'post',
-                                body: JSON.stringify(bodyToSend),
-                                headers: { 'Content-Type': 'application/json' }
-                            }).then(async results => {
-                                const data = await results.json()
-                                dataToLog += data.fileURL + "\n"
-                            })
+                            dataToLog += `[${secretCode}]\n`
+                            attachmentsToUpload.push(attachmentArray[x].toString())
                         }
 
                         ticketLog += `${dataToLog}`
-
-                        if (i == messagesArray.length - 1) {
-                            firstMessageTitle = msg.embeds[0].data.author.name
-                        }
                     }
+
+                    const botMessagesArray = messagesArray.filter(m => m.author.id == client.user.id)
+                    const botMessage = botMessagesArray.find(m => m.embeds[0].description.startsWith("•"))
+                    firstMessageTitle = botMessage.embeds[0].data.author.name
+
+                    const bodyToSend = {
+                        filesArray: attachmentsToUpload,
+                        secretCode: secretCode
+                    }
+
+                    await fetch(`https://fileserver-spyte.glitch.me/ticket-attachments`, {
+                        method: 'post',
+                        body: JSON.stringify(bodyToSend),
+                        headers: { 'Content-Type': 'application/json' }
+                    }).then(async results => {
+                        const data = await results.json()
+                        const links: Array<string> = data.links
+
+                        for (var i = 0; i <= links.length - 1; i++) {
+                            ticketLog = ticketLog.replace(`[${secretCode}]`, links[i])
+                        }
+                    })
                 })
 
                 const localSave = `./tickets/${logFileName}`
@@ -123,6 +133,8 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 
             decline.on("collect", async (r: Discord.MessageReaction) => {
                 r.users.remove(message.author)
+                msg.delete()
+                message.delete()
             })
         })
     }
