@@ -19,7 +19,7 @@ module.exports.run = async (client: any, message: Discord.Message, args: Array<s
             .setTimestamp()
         message.channel.send({ embeds: [embed] }).then(msg => {
             msg.react("✅").then(() => msg.react("❌"))
-            msg.channel.send("https://media.discordapp.net/attachments/565189397000224779/1073788139522490388/idmia_closed.gif")
+            
             const acceptFilter = (reaction: Discord.MessageReaction, user: Discord.User) => reaction.emoji.name == "✅" && user.bot == false
             const accept = msg.createReactionCollector({ filter: acceptFilter })
 
@@ -47,6 +47,7 @@ module.exports.run = async (client: any, message: Discord.Message, args: Array<s
                     .setColor("#7289DA")
                     .setTitle(l.ticketsTitle)
                     .setDescription(l.archivizingTicketDescription)
+                    .setImage("https://media.discordapp.net/attachments/565189397000224779/1073788139522490388/idmia_closed.gif")
                     .setTimestamp()
                 msg.edit({ embeds: [waitEmbed] })
                 msg.reactions.removeAll()
