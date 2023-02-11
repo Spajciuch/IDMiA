@@ -5,7 +5,7 @@ import * as fs from "fs"
 
 import { ticketsCategory, archiveChannel } from "../config.json"
 
-module.exports.run = async (client: Discord.Client, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
+module.exports.run = async (client: any, message: Discord.Message, args: Array<string>, embedColor: Discord.ColorResolvable, l: any, localStorage: any) => {
     const channel = (message.channel as Discord.TextChannel)
     if (client[message.channel.id] == true) return
 
@@ -58,54 +58,54 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                 let firstMessageTitle: string
                 let attachmentsToUpload: Array<string> = []
 
-                await message.channel.messages.fetch().then(async (messages: Discord.Collection<string, Discord.Message>) => {
-                    const messagesArray = messages.map((msg: Discord.Message) => msg)
+                const messages = await fetchMore(channel)
+                const messagesArray = messages.map((msg: Discord.Message) => msg)
 
-                    for (var i = messagesArray.length - 1; i >= 0; i--) {
-                        const msg = messagesArray[i]
-                        var dataToLog = `[${msg.author.tag}]${msg.content || l.ticketNoContent + " "}\n`
+                for (var i = messagesArray.length - 1; i >= 0; i--) {
+                    const msg = messagesArray[i]
+                    var dataToLog = `[${msg.author.tag}]${msg.content || l.ticketNoContent + " "}\n`
 
-                        const attachmentArray = msg.attachments.map((attachment: Discord.Attachment) => attachment.attachment)
+                    const attachmentArray = msg.attachments.map((attachment: Discord.Attachment) => attachment.attachment)
 
-                        for (var x = 0; x <= attachmentArray.length - 1; x++) {
-                            dataToLog += `[${secretCode}]\n`
-                            attachmentsToUpload.push(attachmentArray[x].toString())
-                        }
-
-                        ticketLog += `${dataToLog}`
+                    for (var x = 0; x <= attachmentArray.length - 1; x++) {
+                        dataToLog += `[${secretCode}]\n`
+                        attachmentsToUpload.push(attachmentArray[x].toString())
                     }
 
-                    const botMessagesArray = messagesArray.filter(m => m.author.id == client.user.id)
-                    const botEmbedMessages = botMessagesArray.filter(m => m.embeds[0])
+                    ticketLog += `${dataToLog}`
+                }
 
-                    if (botEmbedMessages) {
-                        const description = botEmbedMessages.find(m => m.embeds[0].description.startsWith("•"))
-                        firstMessageTitle = description.embeds[0].data.author.name
+                const botMessagesArray = messagesArray.filter(m => m.author.id == client.user.id)
+                const botEmbedMessages = botMessagesArray.filter(m => m.embeds[0])
 
-                    } else {
-                        console.log(botMessagesArray)
-                        console.log("\n\n\n\n\n\n\n" + messagesArray)
-                        firstMessageTitle = "BOTA POKURWIŁO"
+                if (botEmbedMessages) {
+                    const description = botEmbedMessages.find(m => m.embeds[0].description.startsWith("•"))
+                    firstMessageTitle = description.embeds[0].data.author.name
+
+                } else {
+                    console.log(botMessagesArray)
+                    console.log("\n\n\n\n\n\n\n" + messagesArray)
+                    firstMessageTitle = "BOTA POKURWIŁO"
+                }
+
+                const attachmentsObj = {
+                    filesArray: attachmentsToUpload,
+                    secretCode: secretCode
+                }
+
+                await fetch(`https://fileserver-spyte.glitch.me/ticket-attachments`, {
+                    method: 'post',
+                    body: JSON.stringify(attachmentsObj),
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(async results => {
+                    const data = await results.json()
+                    const links: Array<string> = data.links
+
+                    for (var i = 0; i <= links.length - 1; i++) {
+                        ticketLog = ticketLog.replace(`[${secretCode}]`, links[i])
                     }
-
-                    const bodyToSend = {
-                        filesArray: attachmentsToUpload,
-                        secretCode: secretCode
-                    }
-
-                    await fetch(`https://fileserver-spyte.glitch.me/ticket-attachments`, {
-                        method: 'post',
-                        body: JSON.stringify(bodyToSend),
-                        headers: { 'Content-Type': 'application/json' }
-                    }).then(async results => {
-                        const data = await results.json()
-                        const links: Array<string> = data.links
-
-                        for (var i = 0; i <= links.length - 1; i++) {
-                            ticketLog = ticketLog.replace(`[${secretCode}]`, links[i])
-                        }
-                    })
                 })
+
 
                 const localSave = `./tickets/${logFileName}`
                 if (!fs.existsSync("./tickets")) {
@@ -152,4 +152,37 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
 module.exports.help = {
     name: "closeTicket",
     category: "util"
+}
+async function fetchMore(channel: Discord.TextChannel, limit = 1000) {
+    if (!channel) {
+        throw new Error(`Expected channel, got ${typeof channel}.`);
+    }
+    if (limit <= 100) {
+        return channel.messages.fetch({ limit });
+    }
+
+    let collection = new Discord.Collection();
+    let lastId = null;
+    let options: any = {};
+    let remaining = limit;
+
+    while (remaining > 0) {
+        options.limit = remaining > 100 ? 100 : remaining;
+        remaining = remaining > 100 ? remaining - 100 : 0;
+
+        if (lastId) {
+            options.before = lastId;
+        }
+
+        let messages: any = await channel.messages.fetch(options);
+
+        if (!messages.last()) {
+            break;
+        }
+
+        collection = collection.concat(messages);
+        lastId = messages.last().id;
+    }
+
+    return collection;
 }
