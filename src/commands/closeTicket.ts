@@ -76,8 +76,17 @@ module.exports.run = async (client: Discord.Client, message: Discord.Message, ar
                     }
 
                     const botMessagesArray = messagesArray.filter(m => m.author.id == client.user.id)
-                    const botMessage = botMessagesArray.find(m => m.embeds[0].description.startsWith("•"))
-                    firstMessageTitle = botMessage.embeds[0].data.author.name
+                    const botEmbedMessages = botMessagesArray.filter(m => m.embeds[0])
+
+                    if (botEmbedMessages) {
+                        const description = botEmbedMessages.find(m => m.embeds[0].description.startsWith("•"))
+                        firstMessageTitle = description.embeds[0].data.author.name
+
+                    } else {
+                        console.log(botMessagesArray)
+                        console.log("\n\n\n\n\n\n\n" + messagesArray)
+                        firstMessageTitle = "BOTA POKURWIŁO"
+                    }
 
                     const bodyToSend = {
                         filesArray: attachmentsToUpload,
